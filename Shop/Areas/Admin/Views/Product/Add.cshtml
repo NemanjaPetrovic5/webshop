@@ -1,0 +1,58 @@
+﻿@model Shop.Models.ViewModels.CreateProductViewModel
+
+@{
+    ViewBag.Title = "Add";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="add-prod">
+            <h4>Add Product</h4>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card1">
+                @using (Html.BeginForm("Add", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken() // Name
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Name)
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", style = "max-width:100% !important;" })
+                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                    </div> // Price
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Price)
+                        @Html.TextBoxFor(m => m.Price, new { @class = "form-control", style = "max-width:100% !important;" })
+                        @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Thumbnail) <br />
+                        @Html.TextBoxFor(m => m.Thumbnail, new { type = "file", style = "max-width:100% !important;" })<br />
+                        @Html.ValidationMessageFor(m => m.Thumbnail, "", new { @class = "text-danger" })
+                    </div> // Description
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Description) <br />
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = 5, style = "max-width:100% !important;" })
+
+                        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                    </div> // Images
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Product.CategoryId, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.Product.CategoryId, new
+                        SelectList(Model.Categories, "Id", "Name"), "Select Category", new
+                        {
+                            @class = "form-control",
+                            style = "max-width:100% !important;"
+                        })
+                        @Html.ValidationMessageFor(m => m.Product.CategoryId, "", new { @class = "text-danger" })
+                    </div>
+
+
+                    <div class="form-group col-md-offset-5">
+                        <input type="submit" class="btn btn-primary" value="Insert" />
+                    </div>}
+            </div>
+        </div>
+    </div>
+</div>

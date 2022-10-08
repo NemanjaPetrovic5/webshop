@@ -1,0 +1,74 @@
+﻿@using Shop.Models
+@{ ViewBag.Title = "Cart";
+    List<Cart> cartItems = ViewBag.CartItems; }
+
+<div class="top-container" style="margin-top:50px">
+    <h1 class="header">Cart (@(cartItems != null ? cartItems.Count : 0 ))</h1>
+</div>
+
+<section id="user-cart">
+    @if (cartItems != null && cartItems.Count > 0)
+    {
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th class="right">Quantity</th>
+                                <th class="center">Price</th>
+                                <th class="right">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in cartItems)
+                            {
+            <tr>
+
+                <td data-label="Product">
+                    <div class="cart-product-image">
+                        <img src="~/Upload/images/@item.Product.Thumbnail" style="width:100px;height:100px" />
+                    </div>
+                    <a class="cart-product-link" href="@Url.Action("Details", "Home", new { id = item.Product.Id })">@item.Product.Name</a>
+                </td>
+                <td data-label="Quantity">
+                    <div class="product-quantity">
+                        <button type="button" class="minus">-</button>
+                        <input class="product-quantity-value cart-item-qnt" for-product="@item.Product.Id" name="qnt" type="number" value="@item.Quantity" min="1" />
+                        <button type="button" class="plus">+</button>
+                    </div>
+                </td>
+                <td>@item.Product.Price</td>
+
+                <td data-label="Subtotal">
+                    @{ var subTotal = item.Product.Price * item.Quantity; }
+                    @(item.Product.Price * item.Quantity)
+                </td>
+                <td><a href="@Url.Action("Remove", "Cart", new { id = item.Product.Id })"><i class="fa fa-times-circle fa-2x red" aria-hidden="true"></i></a></td>
+            </tr>
+}
+                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                <div class="cart-total">
+                    <div class="total">
+                        Total: <b>@ViewBag.Total.ToString("N2")</b>
+                    </div>
+                    <a href="@Url.Action("Index", "Order")" class="order">Checkout</a>
+                </div> }
+            else
+            {
+<div class="cart-empty">
+    Your cart is empty.
+</div>}
+</section>

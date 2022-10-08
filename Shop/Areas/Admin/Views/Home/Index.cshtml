@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+        <div class="content container-fluid">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3 class="page-title">Welcome Admin!</h3>
+                        <h4>Dashboard</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="cards">
+                                <div class="card-body">
+                                    <a href='@Url.Action("Index", "Product")'><i class="fa fa-cubes fa-2x"></i></a><h3 class="card-title">@Html.ActionLink("Products", "Index", "Product", null, new { @class = "white" })</h3>
+                                    <div id="bar-charts"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <div class="cards">
+                                <div class="card-body">
+                                     <a href='@Url.Action("Index", "User")'><i class="fa fa-user fa-2x"></i></a><h3 class="card-title">@Html.ActionLink("Users", "Index", "User", null, new { @class = "white" })</h3>
+                                    <div id="line-charts"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <div class="cards">
+                                <div class="card-body">
+                                    <a href='@Url.Action("Index", "Category")'><i class="fa fa-diamond fa-2x"></i></a><h3 class="card-title">@Html.ActionLink("Categories", "Index", "Category", null, new { @class = "white" })</h3>
+                                    <div id="line-charts"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <div class="cards">
+                                <div class="card-body">
+                                    <a href='@Url.Action("Index", "Order")'><i class="fa fa-usd fa-2x"></i></a><h3 class="card-title">@Html.ActionLink("Orders", "Index", "Order", null, new { @class = "white" })</h3>
+                                    <div id="line-charts"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+

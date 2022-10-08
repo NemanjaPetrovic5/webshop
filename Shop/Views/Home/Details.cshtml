@@ -1,0 +1,83 @@
+﻿@using Shop.Models
+@model Shop.Models.Product
+@{
+    ViewBag.Title = "Details";
+    List<Cart> cart = (List<Cart>)Session["cart"];
+
+}
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+{
+    <div class="cc" >
+        <div class="" style="margin-top:30px">
+            <a class="ctg-link active-ctg" href="@Url.Action("Index", "Home")">Home</a> >
+
+            @if (Model.CategoryId != null)
+            {
+                <a class="ctg-link active-ctg" href="@Url.Action("Products", "Home", new { categoryId = Model.Category.Id })">@Model.Category.Name</a> }
+            else
+            {
+                <a class="ctg-link active-ctg" href="@Url.Action("Products", "Home", new { categoryId = 0 })">Uncategorized</a>} >
+
+            <a class="ctg-link1 active-ctg" href="@Url.Action("Details", "Home", new { categoryId = Model.Id })">@Model.Name</a>
+
+        </div>
+        
+    </div>
+
+}
+<h2>Details</h2>
+
+<div class="row">
+    <div class="col-xl-3 col-lg-6  col-md-6 col-xxl-5 ">
+
+        <div class="tab-slide-content new-arrival-product mb-4 mb-xl-0">
+            <!-- Nav tabs -->
+            <ul class="nav slide-item-list mt-3">
+                <li class="show">
+                    <img src="~/Upload/images/@Model.Thumbnail" alt="@Model.Name" style="width:450px;height:500px" />
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-xl-9 col-lg-6  col-md-6 col-xxl-7 col-sm-12">
+        <div class="product-detail-content">
+            <!--Product details-->
+            <div class="new-arrival-content pr">
+                <h4>
+                    @Html.DisplayFor(model => model.Name)
+                </h4>
+
+                <div class="d-table mb-2">
+                    <p class="price float-left d-block">$@Html.DisplayFor(model => model.Price)</p>
+                </div>
+                <p>Product code: <span class="item">@Html.DisplayFor(model => model.Id)</span> </p>
+                <p>Category: <span class="item">@Html.DisplayFor(model => model.Category.Name)</span></p>
+
+                <p class="text-content">
+                    @Html.DisplayFor(model => model.Description)
+                </p>
+
+                @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post, new { id = "add-product" }))
+                {
+                    if (cart == null || cart.FindIndex(item => item.Product.Id == Model.Id) < 0)
+                    {
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <div class="product-quantity">
+                            <button type="button" class="minus">-</button>
+                            <input class="product-quantity-value" name="qnt" type="number" value="1" min="1" />
+                            <button type="button" class="plus">+</button>
+                        </div>
+                        <button type="submit" class="add-to-cart"><i class="fas fa-cart-plus"></i> &nbsp; Add to cart</button>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Index", "Cart")" class="add-to-cart added"><span class="view"><i class="fas fa-shopping-cart"></i> &nbsp; View Cart</span></a><br />
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Products")
+</p>

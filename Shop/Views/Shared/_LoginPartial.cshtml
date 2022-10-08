@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+<ul class="nav2 navbar-nav navbar-right" >
+    @*<li>
+        @Html.ActionLink("Hello " + User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+    </li>
+    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>*@
+    <li class="dropdown">
+        <a class="dropbtn"  style="padding-left:0px">@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</a>
+        <div class="dropdown-content">
+            <a href="@Url.Action("MyProfile", "Home")"><i class="far fa-user"></i> Profile</a>
+            @if (User.IsInRole("Admin"))
+            {
+            <a href="@Url.Action("Index", "Home", new { area = "Admin" })"><i class="fas fa-shield-alt"></i> Admin panel</a>
+            }
+            <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out" style="color:red"></i>Log off</a>
+
+        </div>
+    </li>
+</ul>
+    }
+    @*if (User.IsInRole("Admin"))
+    {
+       <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="@Url.Action("Index", "Home", new { area = "Admin" })"><i class="fas fa-shield-alt"></i> Admin panel</a>
+            </li>
+        </ul>
+    }*@
+}
+else
+{
+    <ul class="nav2 navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

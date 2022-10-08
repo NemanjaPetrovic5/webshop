@@ -1,0 +1,81 @@
+﻿@using Shop.Models
+@model ProfileViewModel
+@{
+    ViewBag.Title = "My Profile";
+    List<Order> orders = ViewBag.Orders;
+}
+
+<div class="top-container" style="margin-top:50px">
+    <h1 class="header">@Model.FirstName @Model.LastName</h1>
+</div>
+<section id="profile" class="page-containter">
+<div class="row">
+
+    <div class="my-account col-md-7">
+        <h2>My Account</h2>
+        @using (Html.BeginForm("UpdateAccount", "Home", FormMethod.Post, new { @class = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-item">
+                @Html.LabelFor(user => user.FirstName, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(user => user.FirstName, new { htmlAttributes = new { @class = "form-control", style = "max-width:100% !important;" } })
+                @Html.ValidationMessageFor(user => user.FirstName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-item">
+                @Html.LabelFor(user => user.LastName, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(user => user.LastName, new { htmlAttributes = new { @class = "form-control", style = "max-width:100% !important;" } })
+                @Html.ValidationMessageFor(user => user.LastName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-item">
+                @Html.LabelFor(user => user.Address, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(user => user.Address, new { htmlAttributes = new { @class = "form-control", style = "max-width:100% !important;" } })
+                @Html.ValidationMessageFor(user => user.Address, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-item">
+                @Html.LabelFor(user => user.PostCode, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(user => user.PostCode, new { htmlAttributes = new { @class = "form-control", style = "max-width:100% !important;" } })
+                @Html.ValidationMessageFor(user => user.PostCode, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-item">
+                @Html.LabelFor(user => user.City, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(user => user.City, new { htmlAttributes = new { @class = "form-control", style = "max-width:100% !important;" } })
+                @Html.ValidationMessageFor(user => user.City, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-item">
+                @Html.LabelFor(user => user.PhoneNumber, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(user => user.PhoneNumber, new { htmlAttributes = new { @class = "form-control", style = "max-width:100% !important;" } })
+                @Html.ValidationMessageFor(user => user.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-offset-5" style="margin-top:10px;">
+                <input type="submit" class="btn btn-primary" value="Update Account" />
+            </div>
+        }
+    </div>
+    <div class=col-md-1></div>
+    <div class="my-orders col-md-4">
+        <div class="orders">
+            <h2>My Orders</h2>
+            @if (orders != null && orders.Count > 0)
+            {
+                foreach (Order order in ViewBag.Orders)
+                {
+                    <div class="order">
+                        <a href="@Url.Action("OrderCreated", "Order", new { id = order.Id })">
+                            @order.Created.ToString("dd.MM.yyyy hh:mm tt")
+                        </a>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="order">
+                    <a href="@Url.Action("Index", "Home")" title="Go to home page">
+                        No Orders
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    </div>
+
+</section>

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Shop.Models.Category>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div style="margin-top:100px"></div>
+@foreach (var item in Model) {
+
+            @Html.DisplayFor(modelItem => item.Name)
+  
+}
+
+

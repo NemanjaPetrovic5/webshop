@@ -1,0 +1,59 @@
+﻿@using Shop.Models
+@model IEnumerable<ApplicationUser>
+
+@{ ViewBag.Title = "Users"; }
+
+<div class="row">
+    <div class="col-md-12">
+        @if (Model != null && Model.Count() > 0)
+        {
+         <table id="admin-users" class="table m-b-0 photo-table">
+              <thead>
+                  <tr class="text-uppercase">
+
+                      <th>ID</th>
+                      <th>Email</th>
+                      <th>First name</th>
+                      <th>Last name</th>
+                      <th>Orders</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+             @foreach (var u in Model)
+              {
+              <tr>
+                   <td>
+                        <a href="@Url.Action("Edit", "User", new { id = u.Id })">@u.Id</a>
+                   </td>
+                   <td>@u.Email</td>
+                   <td>@u.FirstName</td>
+                   <td>@u.LastName</td>
+                   <td>@u.Orders.Count</td>
+                   <td>
+                        <a href="@Url.Action("Edit", "User", new { id = u.Id })">
+                            <span class="btn-icon-left text-primary">
+                                <i class="fa fa-edit fa-2x"></i>
+                            </span>
+                        </a>
+                   </td>
+                   <td>
+                  @using (Html.BeginForm("Delete", "User", FormMethod.Post, new { @class = "d-inline" }))
+                   {
+                   <input type="hidden" name="id" value="@u.Id" />
+                        @Html.AntiForgeryToken()
+                            <button type="submit" class="btn-link delete-product">
+                                 <span><i class="fa fa-trash fa-2x"></i></span>
+                            </button>                    }
+                   </td>
+              </tr>
+              }
+              </tbody>
+         </table> 
+         }
+         else
+         {
+         <p class="text-center display-4">No users found. <a href="@Url.Action("Register", "Account", new { area="" })">Add one</a></p>}
+    </div>
+</div>

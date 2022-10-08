@@ -1,0 +1,102 @@
+﻿@*@model IEnumerable<Shop.Models.Product>*@
+@model PagedList.IPagedList<Shop.Models.Product>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+<div class="row" style="margin-top:60px; margin-bottom:50px">
+    <div class="col-md-12">
+
+        <div id="wrapper">
+
+            <a class="shop-btn" href="@Url.Action("Products","Home")">
+                SHOP NOW
+            </a>
+        </div>
+        <img src="~/Content/img/Slider01.png" class="" title="" alt="" style=" width:100%; height:auto">
+    </div>
+
+</div>
+
+<div class="row" style="margin-top:20px; margin-bottom:50px">
+    <div class="col-md-8">
+        @if (Model != null && Model.Count > 0)
+        {
+            <div class="product-list2">
+                @foreach (var p in Model)
+                {<!-- PRODUCT-->
+                    <article class="product2">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="product-thumb2">
+                                    <img class="img-fluid w-100" src="~/Upload/images/@p.Thumbnail" alt="...">
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="product-info2">
+
+                                    <div class="product-details2" title="@p.Name">
+                                        <div class="name2">@p.Name</div>
+                                        <div class="price2">@p.Price $</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        @Html.ActionLink(" ", "Details", new { id = p.Id })
+
+                    </article>}
+            </div>
+
+        }
+        else
+        {
+            <p class="empty-list">No products were found.</p>}
+    </div>
+
+    <div class="col-md-4">
+        <img src="~/Content/img/H302.png" alt="" style=" width:100%; height:auto">
+    </div>
+
+</div>
+<hr />
+<div class="row service-wrapper"> 
+    <div class="col-sm-3  service-item"> 
+        <div class="icon"> 
+            <i class="fa fa-truck"></i> 
+        </div> 
+        <div class="text"> 
+            <h4> FREE Shipping </h4> 
+            <p> All orders over $50 delivered within Serbia </p> 
+        </div> 
+    </div> 
+    <div class="col-sm-3 service-item"> 
+        <div class="icon"> 
+            <i class="fa fa-globe-asia"></i> 
+        </div> 
+        <div class="text"> 
+            <h4> International Delivery </h4> 
+            <p> International delivery available. </p> 
+        </div> 
+    </div> 
+    <div class="col-sm-3 service-item"> 
+        <div class="icon"> 
+            <i class="fa fa-redo"></i> 
+        </div>
+        <div class="text"> 
+            <h4> Easy Returns </h4> 
+            <p> We make exchanging and returning simple. </p> 
+        </div> 
+    </div> 
+    <div class="col-sm-3 service-item"> 
+        <div class="icon">
+            <i class="fa fa-box"></i> 
+        </div> 
+        <div class="text"> 
+            <h4> DELIVERY INSURANCE </h4> 
+            <p> Insurance on shipping included. </p> 
+        </div> 
+    </div>
+</div>
+
+      

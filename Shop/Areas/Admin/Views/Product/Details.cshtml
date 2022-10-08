@@ -1,0 +1,51 @@
+﻿@model Shop.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row titl">
+    <div class="col-md-1">
+
+    </div>
+
+    <div class="col-xl-3 col-lg-5  col-md-5 col-xxl-5 ">
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+
+        <div class="tab-slide-content new-arrival-product mb-4 mb-xl-0">
+            <ul class="nav slide-item-list mt-3" role="tablist">
+                <li role="presentation" class="show">
+                    <img src="~/Upload/images/@Model.Thumbnail" alt="@Model.Name" style="width:450px;height:500px" />
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="col-xl-9 col-lg-6  col-md-6 col-xxl-7 col-sm-12">
+        <div class="product-detail-content">
+
+            <!--Product details-->
+            <div class="new-arrival-content pr">
+                <h4>
+                    @Html.DisplayFor(model => model.Name)
+                </h4>
+
+                <div class="d-table mb-2">
+                    <p class="price float-left d-block">$@Html.DisplayFor(model => model.Price)</p>
+                </div>
+                <p>Product code: <span class="item">@Html.DisplayFor(model => model.Id)</span> </p>
+                <p>Category: <span class="item">@Html.DisplayFor(model => model.Category.Name)</span></p>
+
+                <p class="text-content">
+                    @Html.DisplayFor(model => model.Description)
+                </p>
+                <p>Created: <span class="item">@Html.DisplayFor(model => model.Category.Created)</span></p>
+                <p>Modified: <span class="item">@Html.DisplayFor(model => model.Category.Modified)</span></p>
+
+                </div>
+            </div>
+        </div>
+    </div>

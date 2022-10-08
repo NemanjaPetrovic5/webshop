@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Shop.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            <a href='@Url.Action("CreateNewCategory", "Category")' class="btn add-btn"><i class="fa fa-plus"></i> Create New</a>
+        </p>
+        <table id="table_id" class="display ">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Created)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Modified)
+                    </th>
+                    <th>Options</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Created)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Modified)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", "Category", new { id = item.Id })">
+                                <span class="btn-icon-left text-primary">
+                                    <i class="fa fa-edit fa-2x"></i>
+                                </span>
+                            </a>
+                        </td>
+                        <td>
+                            @using (Html.BeginForm("Delete", "Category", FormMethod.Post, new { @class = "d-inline" }))
+                            {
+                                <input type="hidden" name="id" value="@item.Id" />
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-link delete-product">
+                                     <span class="btn-icon-right"><i class="fa fa-trash fa-2x"></i></span>
+                                </button>}
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+@section scripts{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });</script>
+}

@@ -1,0 +1,60 @@
+﻿@model Shop.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-11">
+        <div class="top-container titl">
+            <h1 class="header">Order #@Model.Id</h1>
+        </div>
+        <div class="card mt-3">
+            <div class="card-header">
+                Date <strong>@Model.Created.ToString("dd.MM.yyyy HH:MM")</strong> <span class="float-right">
+                    <strong>Status:</strong> <span class="@(Model.OrderStatusId == 2 || Model.OrderStatusId == 3 ? "red-text" : "")">@Model.OrderStatus.Name</span>
+                </span>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="center">#</th>
+                                <th>Item</th>
+                                <th class="right">Unit Cost</th>
+                                <th class="center">Qty</th>
+                                <th class="right">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Products)
+                            {
+                                <tr>
+                                    <td class="center">
+                                        <img src="~/Upload/images/@item.Product.Thumbnail" style="width:100px;height:100px" />
+                                        <a class="cart-product-link" href="@Url.Action("Details", "Product", new { id = item.Product.Id })">@item.Product.Name</a>
+                                    </td>
+                                    <td class="left strong">@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td class="right">@Html.DisplayFor(modelItem => item.Price)</td>
+                                    <td class="center">@item.Count</td>
+                                    <td data-label="Total">
+                                        @{ var subTotal = item.Product.Price * item.Count; }
+                                        @(item.Product.Price * item.Count)
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-5"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

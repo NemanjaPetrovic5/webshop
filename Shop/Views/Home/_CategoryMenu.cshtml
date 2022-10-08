@@ -1,0 +1,22 @@
+﻿@using Shop.Models
+@model List<Category>
+@{ RenderTree(Model); }
+
+
+@functions { List<string> menu = new List<string>();
+
+    void RenderTree(List<Category> list)
+    {
+        foreach (var item in list)
+        {
+            menu.Add($"<li class=\"category-item\"><a href=\"" +
+                $"{Url.Action("Products", "Home", new { categoryId = item.Id })}\">{item.Name}");
+            menu.Add("</li>");
+        }
+    } }
+
+<ul class="sub">
+    @foreach (var x in menu)
+    {
+        @Html.Raw(x)}
+</ul>

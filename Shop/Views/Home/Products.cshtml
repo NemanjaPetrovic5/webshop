@@ -1,0 +1,94 @@
+﻿@model PagedList.IPagedList<Shop.Models.Product>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    List<Shop.Models.Category> parents = ViewBag.Parents;
+}
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+{
+    <div class="cc">
+        <div class="home">Home</div>
+        <a class="ctg-link active-ctg" href="@Url.Action("Index", "Home")">Home ></a>
+    </div>
+}
+
+<div class="row" style="margin-top:50px; margin-bottom:50px">
+    <div class="col-md-3">
+        <div class="category"><p class="title-category">All Categories</p></div>
+        <div class="categories">
+            <table>
+                <tbody>
+                        <tr>
+                            <td>
+                                @{ Html.RenderAction("CategoryPartial", "Home"); }
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+
+               @Html.DropDownList(
+    "url",
+    new SelectList(new[]
+    {
+        new SelectListItem { Text = "Name: Ascending", Value = Url.Action("Products", "Home", new { sortProduct = ViewBag.NameAscSortParm, currentFilter = ViewBag.CurrentFilter }) },
+        new SelectListItem { Text = "Name: Descending", Value = Url.Action("Products", "Home", new { sortProduct = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }) },
+        new SelectListItem { Text = "Newest", Value = Url.Action("Products", "Home", new { sortProduct = ViewBag.DateSortDescParm, currentFilter = ViewBag.CurrentFilter }) },
+        new SelectListItem { Text = "Oldest", Value = Url.Action("Products", "Home", new { sortProduct = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter }) },
+        new SelectListItem { Text = "Price: Low to High", Value = Url.Action("Products", "Home", new { sortProduct = ViewBag.PriceAscSort, currentFilter = ViewBag.CurrentFilter }) },
+        new SelectListItem { Text = "Price: High to Low", Value = Url.Action("Products", "Home", new { sortProduct = ViewBag.PriceDescSort, currentFilter = ViewBag.CurrentFilter }) },
+
+    }, "Value", "Text"),
+    "-- Default sorting ---",
+    new { id = "urlddl" }
+)
+        @if (Model != null && Model.Count > 0)
+        {
+            <div class="product-list">
+                @foreach (var p in Model)
+                {<!-- PRODUCT-->
+                    <article class="product">
+                        <div class="product-thumb">
+                            <img class="img-fluid w-100" src="~/Upload/images/@p.Thumbnail" alt="...">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-details" title="@p.Name">
+                                <div class="name">@p.Name</div>
+                                <div class="price">@p.Price $</div>
+                            </div>
+                            <div class="add-product">
+                                <a class="addToCart-btn" href="@Url.Action("AddToCart", "Cart", new { id = p.Id })">Add to cart</a>
+                            </div>
+                        </div>
+                        @Html.ActionLink(" ", "Details", new { id = p.Id })
+
+                    </article>}
+            </div>
+
+        }
+        else
+        {
+            <p class="empty-list">No products were found.</p>}
+    </div>
+</div>
+
+<br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Products",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+    @*<a href="@Url.Action("AddToCart", "Cart", new { id = item.Id })">Add to Cart</a>*@
+<script>$(function () {
+        $('#urlddl').change(function () {
+            var url = $(this).val();
+            if (url != null && url != '') {
+                window.location.href = url;
+            }
+          
+        });
+    });</script>
